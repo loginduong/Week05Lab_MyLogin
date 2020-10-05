@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("logout", true);
         }
 
-        User user = (User) session.getAttribute("username");
+        User user = (User) session.getAttribute("user");
         if (user != null) {
             request.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp")
                     .forward(request, response);
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 && password != null && !password.isEmpty()) {
             User user = as.login(username, password);
             if (user != null) {
-                session.setAttribute("username", user.getUsername());
+                session.setAttribute("user", user);
                 response.sendRedirect("home");
                 return;
             } else {

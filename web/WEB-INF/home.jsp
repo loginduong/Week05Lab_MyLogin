@@ -16,7 +16,7 @@
     <body>
         <h1>Home Page</h1>
         <p>
-            Hello ${username}.
+            Hello ${user["username"]}.
         </p>
         <a href="login?logout">Log out</a>
     </body>
