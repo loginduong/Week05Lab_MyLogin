@@ -14,11 +14,16 @@ import java.util.ArrayList;
 public class AccountService {
 
     private final String PASSWORD = "password";
-    private ArrayList<String> usernames;
+    private final ArrayList<String> usernames;
 
-    public User login(String username, String password) {
+    public AccountService() {
+        usernames = new ArrayList<>();
         usernames.add("abe");
         usernames.add("barb");
+    }
+    
+    public User login(String username, String password) {
+        
 
         if (usernames.contains(username) && password.equals(this.PASSWORD)) {
             User user = new User(username, null);

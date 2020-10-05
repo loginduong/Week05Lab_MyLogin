@@ -28,7 +28,7 @@
             Invalid username/password.
         </span>
     </c:if>
-    <c:if test = "${logout}}">
+    <c:if test = "${logout}">
         <span>
             Successfully logged out.
         </span>

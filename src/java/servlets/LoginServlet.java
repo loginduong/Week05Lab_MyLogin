@@ -19,6 +19,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
         String logout = request.getParameter("logout");
         if (logout != null) {
             session.invalidate();
@@ -50,18 +51,21 @@ public class LoginServlet extends HttpServlet {
             User user = as.login(username, password);
             if (user != null) {
                 session.setAttribute("username", user.getUsername());
-                response.sendRedirect("/WEB-INF/home.jsp");
+                response.sendRedirect("home");
+                return;
             } else {
                 request.setAttribute("usernameInput", username);
                 request.setAttribute("passwordInput", password);
                 request.setAttribute("invalid", true);
                 request.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp")
                         .forward(request, response);
+                return;
             }
         }
 
         request.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp")
                 .forward(request, response);
+        
     }
 
 }
