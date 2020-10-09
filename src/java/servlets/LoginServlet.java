@@ -14,12 +14,13 @@ import models.User;
  * @author 760483
  */
 public class LoginServlet extends HttpServlet {
+//if user session attribute exists go to home
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+
         String logout = request.getParameter("logout");
         if (logout != null) {
             session.invalidate();
@@ -46,25 +47,26 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (username != null && !username.isEmpty()
-                && password != null && !password.isEmpty()) {
-            User user = as.login(username, password);
-            if (user != null) {
-                session.setAttribute("user", user);
-                response.sendRedirect("home");
-                return;
-            } else {
+        User newUser = as.login(username, password);
+
+        //if empty username / password give invalid
+        //if username / password do not match give invalid
+        //if correct username / password make user attribute and go to home
+        
+
+            if (username == null || username.isEmpty() || password == null || password.isEmpty()
+                    || newUser == null) {
                 request.setAttribute("usernameInput", username);
                 request.setAttribute("passwordInput", password);
                 request.setAttribute("invalid", true);
                 request.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp")
                         .forward(request, response);
                 return;
+            } else {
+                session.setAttribute("user", newUser);
+                response.sendRedirect("home");
+                return;
             }
-        }
-
-        request.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp")
-                .forward(request, response);
         
     }
 
